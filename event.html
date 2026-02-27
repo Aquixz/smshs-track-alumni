@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Upcoming Events - Alumni Portal</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard-body">
+
+<header class="top-bar">
+  <div class="logo-small">
+    <img src="sanma.png" alt="Logo">
+    <span>San Mateo Senior High School</span>
+  </div>
+  <button class="logout-btn" onclick="location.href='login.html'">Logout</button>
+</header>
+
+<div class="dashboard-container wide-container">
+  <div class="back-nav">
+    <a href="#" id="backLink" class="back-link">← Back to Dashboard</a>
+  </div>
+
+  <h2>Upcoming Events & News</h2>
+  <p class="subtitle">Click an event to see more details</p>
+
+  <div id="eventList" class="event-list">
+    
+    <div class="event-card" onclick="openEvent('homecoming')">
+      <div class="event-date">
+        <span class="day">28</span>
+        <span class="month">MAR</span>
+      </div>
+      <div class="event-info">
+        <h3>Grand Alumni Homecoming 2026</h3>
+        <p>A night of nostalgia and networking at the School Quadrangle.</p>
+        <span class="tag">Special Event</span>
+      </div>
+    </div>
+
+    <div class="event-card" onclick="openEvent('jobfair')">
+      <div class="event-date">
+        <span class="day">15</span>
+        <span class="month">APR</span>
+      </div>
+      <div class="event-info">
+        <h3>Job Fair & Career Expo</h3>
+        <p>Connect with over 50 companies looking for new talent.</p>
+        <span class="tag">Career</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="eventModal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal" onclick="closeEvent()">&times;</span>
+    <div id="modalBody">
+      </div>
+  </div>
+</div>
+
+<script src="login-logic.js"></script>
+<script src="event-viewer.js"></script>
+<script>
+  // Get user specific to this tab
+  const currentUser = getCurrentUser();
+  const backLink = document.getElementById("backLink");
+  
+  if (currentUser && currentUser.role === "alumni") {
+    backLink.href = "searchh.html"; // Alumni dashboard
+  } else {
+    backLink.href = "search.html"; // Student dashboard
+  }
+</script>
+<script src="data-manager.js"></script>
+</body>
+</html>

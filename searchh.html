@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Alumni Dashboard - Alumni Portal</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard-body">
+
+<header class="top-bar">
+  <div class="logo-small">
+    <img src="sanma.png" alt="Logo">
+    <span>San Mateo Senior High School | Alumni</span>
+  </div>
+  <button class="logout-btn" onclick="location.href='login.html'">Logout</button>
+</header>
+
+<div class="dashboard-container">
+  <h2>Alumni Dashboard</h2>
+  <p class="subtitle">Welcome back, Graduate! Select an action below.</p>
+
+  <div class="action-grid">
+    <div class="action-card">
+      <div class="icon">👤</div>
+      <h3>My Profile</h3>
+      <p style="color: #8b9dc3; font-size: 12px; margin-bottom: 15px;">View your records</p>
+      <button onclick="location.href='profile.html'">View Profile</button>
+    </div>
+
+    <div class="action-card">
+      <div class="icon">🔍</div>
+      <h3>Search Alumni</h3>
+      <p style="color: #8b9dc3; font-size: 12px; margin-bottom: 15px;">Connect with batchmates</p>
+      <button onclick="location.href='find-alumni.html'">Find Graduates</button>
+    </div>
+
+    <div class="action-card">
+      <div class="icon">📅</div>
+      <h3>View Event</h3>
+      <p style="color: #8b9dc3; font-size: 12px; margin-bottom: 15px;">School news & events</p>
+      <button onclick="location.href='event.html'">Upcoming</button>
+    </div>
+
+    <div class="action-card">
+      <div class="icon">🔄</div>
+      <h3>Update</h3>
+      <p style="color: #8b9dc3; font-size: 12px; margin-bottom: 15px;">View Updates</p>
+      <button onclick="location.href='notification.html'">View</button>
+    </div>
+  </div>
+</div>
+<script src="data-manager.js"></script>
+</body>
+</html>

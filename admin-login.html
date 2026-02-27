@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login | School Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .password-container {
+            position: relative;
+            width: 100%;
+        }
+        .password-container input {
+            width: 100%;
+            padding-right: 40px;
+            box-sizing: border-box;
+        }
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #666;
+            font-size: 14px;
+            user-select: none;
+        }
+        .toggle-password:hover {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="sanma.png" alt="School Logo">
+        </div>
+        
+        <h2>Admin Portal</h2>
+        <p class="subtitle">Enter credentials to manage events</p>
+
+        <form id="loginForm">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="email@school.edu" required>
+
+            <label for="password">Password</label>
+            <div class="password-container">
+                <input type="password" id="password" placeholder="••••••••" required>
+                <span class="toggle-password" onclick="togglePassword()">👁️</span>
+            </div>
+
+            <button type="submit">Sign In</button>
+            <a href="admin.html">Back to Home</a>
+        </form>
+        
+        <p id="errorMessage" style="color: #dc2626; font-size: 13px; text-align: center; margin-top: 15px; display: none; font-weight: 500;">
+            Invalid email or password.
+        </p>
+    </div>
+
+    <script src="admin-login.js"></script>
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.querySelector('.toggle-password');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.textContent = '🙈';
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.textContent = '👁️';
+            }
+        }
+    </script>
+    <script src="data-manager.js"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Dashboard - Alumni Portal</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard-body">
+
+<header class="top-bar">
+  <div class="logo-small">
+    <img src="sanma.png" alt="Logo">
+    <span>San Mateo Senior High School | Student</span>
+  </div>
+  <button class="logout-btn" onclick="location.href='login.html'">Logout</button>
+</header>
+
+<div class="dashboard-container">
+  <h2>Student Dashboard</h2>
+  <p class="subtitle">Welcome back! Select an action below.</p>
+
+  <div class="action-grid">
+    <div class="action-card">
+      <div class="icon">🔍</div>
+      <h3>Search Alumni</h3>
+      <button onclick="location.href='find-alumni.html'">Find Graduates</button>
+    </div>
+
+    <div class="action-card">
+      <div class="icon">📅</div>
+      <h3>View Event</h3>
+      <button onclick="location.href='event.html'">Upcoming News</button>
+    </div>
+
+    <div class="action-card centered-card">
+      <div class="icon">🔔</div>
+      <h3>Notification</h3>
+      <button onclick="location.href='notification.html'">View Notification</button>
+    </div>
+  </div>
+</div>
+<script src="data-manager.js"></script>
+</body>
+</html>

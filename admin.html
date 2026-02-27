@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Panel</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .top-bar {
+      background: #1a2332;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+    .logo-small {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      color: white;
+      font-weight: 600;
+      font-size: 18px;
+    }
+    .logo-small img {
+      height: 45px;
+      width: auto;
+    }
+    .logout-btn {
+      background: transparent;
+      color: #dc2626;
+      border: 2px solid #dc2626;
+      padding: 8px 25px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    .logout-btn:hover {
+      background: #dc2626;
+      color: white;
+    }
+    .admin-container {
+      margin-top: 80px;
+      padding: 20px;
+    }
+    .view-btn {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-right: 10px;
+      font-size: 12px;
+    }
+    .view-btn:hover {
+      background: #45a049;
+    }
+    .delete-btn {
+      background: #dc2626;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    .delete-btn:hover {
+      background: #b91c1c;
+    }
+    .button-group {
+      margin-top: 15px;
+      display: flex;
+      gap: 10px;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: #1a2332;
+      border-radius: 15px;
+      padding: 30px;
+      max-width: 600px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      position: relative;
+    }
+    .close-modal {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 28px;
+      color: #8b9dc3;
+      cursor: pointer;
+    }
+    .close-modal:hover {
+      color: white;
+    }
+    .profile-view h3 {
+      color: white;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .info-section {
+      margin-bottom: 20px;
+    }
+    .info-section h4 {
+      color: #4CAF50;
+      margin-bottom: 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding-bottom: 5px;
+    }
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .info-label {
+      color: #8b9dc3;
+    }
+    .info-value {
+      color: white;
+      font-weight: 500;
+    }
+    .admin-form-card {
+      background: #1e293b;
+      border-radius: 12px;
+      padding: 25px;
+      margin-bottom: 20px;
+    }
+    .input-group {
+      margin-bottom: 20px;
+    }
+    .input-group label {
+      display: block;
+      color: #8b9dc3;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+    .input-group input,
+    .input-group textarea,
+    .input-group select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      background: #0f172a;
+      color: white;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+    .input-group input:focus,
+    .input-group textarea:focus {
+      outline: none;
+      border-color: #4CAF50;
+    }
+    .file-upload-zone {
+      border: 2px dashed rgba(255,255,255,0.2);
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: #8b9dc3;
+    }
+    .file-upload-zone:hover {
+      border-color: #4CAF50;
+      background: rgba(76, 175, 80, 0.1);
+    }
+    .save-btn {
+      background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      width: 100%;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+    }
+    .save-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+    }
+    .save-btn:active {
+      transform: translateY(0);
+    }
+    .admin-actions {
+      margin-top: 20px;
+    }
+    .btn-secondary {
+      background: transparent;
+      color: white;
+      border: 2px solid rgba(255,255,255,0.2);
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.1);
+    }
+    .storage-warning {
+      background: #fef3c7;
+      border: 1px solid #f59e0b;
+      color: #92400e;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body class="dashboard-body">
+
+<header class="top-bar">
+  <div class="logo-small">
+    <img src="sanma.png" alt="Logo">
+    <span>San Mateo Senior High School | Admin</span>
+  </div>
+  <button class="logout-btn" onclick="logoutAdmin()">Logout</button>
+</header>
+
+<div class="container admin-container">
+  <h2>Admin Panel</h2>
+  <p class="subtitle">Manage student and alumni records</p>
+
+  <div class="admin-tabs">
+    <button class="tab-btn active" onclick="switchTab('alumni')" id="alumniTab">Alumni Records</button>
+    <button class="tab-btn" onclick="switchTab('students')" id="studentsTab">Student Records</button>
+    <button class="tab-btn" onclick="switchTab('events')" id="eventsTab">Add News/Events</button>
+  </div>
+  
+  <div id="recordsSection">
+    <div class="search-section">
+      <input type="text" id="searchInput" placeholder="Search by name, LRN, strand, year..." onkeyup="searchRecords()">
+      
+      <div class="filter-row">
+        <select id="filterStrand" onchange="searchRecords()">
+          <option value="">All Strands</option>
+          <option value="programming">TVL - Computer Programming</option>
+          <option value="fbs-cookery">TVL - FBS / Cookery</option>
+          <option value="animation">TVL - Animation</option>
+          <option value="beautycare">TVL - Beauty Care</option>
+          <option value="eim">TVL - EIM</option>
+          <option value="stem">STEM</option>
+          <option value="abm">ABM</option>
+          <option value="humss">HUMSS</option>
+        </select>
+        
+        <select id="filterYear" onchange="searchRecords()">
+          <option value="">All Years</option>
+          <option value="2025">2025</option>
+          <option value="2024">2024</option>
+          <option value="2023">2023</option>
+          <option value="2022">2022</option>
+          <option value="2021">2021</option>
+          <option value="2020">2020</option>
+          <option value="2019">2019</option>
+          <option value="2018">2018</option>
+        </select>
+
+        <select id="filterStatus" onchange="searchRecords()" style="display: none;">
+          <option value="">All Status</option>
+          <option value="currently-enrolled">Currently Enrolled</option>
+          <option value="completed-college">Completed College</option>
+          <option value="never-pursued">Never Pursued College</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="stats-bar">
+      <span id="totalRecords">Total: 0 records</span>
+      <span id="showingRecords">Showing: 0 filtered</span>
+    </div>
+    
+    <ul id="list"></ul>
+  </div>
+
+  <div id="eventsSection" style="display: none;">
+    <div class="admin-form-card">
+      <h3 style="color: white; margin-bottom: 15px;">📢 Post New Event</h3>
+      
+      <div class="storage-warning" id="storageWarning">
+        ⚠️ <strong>Storage Limit:</strong> Maximum file size is 50MB per file. For larger files, please use an external link.
+      </div>
+
+      <div class="input-group">
+        <label>Event Date</label>
+        <input type="date" id="eventDate">
+      </div>
+
+      <div class="input-group">
+        <label>Event Title</label>
+        <input type="text" id="eventTitle" placeholder="e.g. Grand Alumni Homecoming 2026">
+      </div>
+
+      <div class="input-group">
+        <label>Description</label>
+        <textarea id="eventDesc" rows="5" placeholder="Enter full details and news here..."></textarea>
+      </div>
+
+      <div class="input-group">
+        <label>Media Upload (Image or Video) - Max 50MB</label>
+        <div class="file-upload-zone" onclick="document.getElementById('eventMedia').click()">
+          <span id="fileStatus">Click to select Image or Video</span>
+          <input type="file" id="eventMedia" accept="image/*,video/*" style="display: none;" onchange="updateFileLabel()">
+        </div>
+      </div>
+
+      <button type="button" class="save-btn" id="publishBtn">
+        🚀 Publish to Dashboard
+      </button>
+    </div>
+
+    <div class="admin-form-card" style="margin-top: 25px; border-top: 4px solid #e11d48;">
+      <h3 style="color: white; margin-bottom: 15px;">🗑️ Manage Active Events</h3>
+      <p style="color: #8b9dc3; font-size: 14px; margin-bottom: 15px;">Click delete to remove an event from student/alumni dashboards.</p>
+      <div id="adminEventList">
+      </div>
+    </div>
+  </div>
+  
+  <div class="admin-actions" id="adminActionsDiv">
+    <button onclick="exportData()" class="btn-secondary">Export Data</button>
+  </div>
+</div>
+
+<div id="viewModal" class="modal" onclick="closeModal(event)">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <span class="close-modal" onclick="closeModal()">&times;</span>
+    <div id="modalBody" class="profile-view">
+    </div>
+  </div>
+</div>
+
+<script src="admin.js"></script>
+<script>
+  function logoutAdmin() {
+    localStorage.removeItem('isAdminLoggedIn');
+    window.location.href = 'admin-login.html';
+  }
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    const publishBtn = document.getElementById('publishBtn');
+    if (publishBtn) {
+      publishBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (typeof publishEvent === 'function') {
+          publishEvent();
+        } else {
+          alert("Error: publishEvent function not loaded.");
+        }
+      });
+    }
+  });
+</script>
+</body>
+</html>

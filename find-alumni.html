@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Search Alumni - Alumni Portal</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard-body">
+
+<header class="top-bar">
+  <div class="logo-small">
+    <img src="sanma.png" alt="Logo">
+    <span>San Mateo Senior High School</span>
+  </div>
+  <button class="logout-btn" onclick="location.href='index.html'">Logout</button>
+</header>
+
+<div class="dashboard-container wide-container">
+  <div class="back-nav">
+    <a href="#" id="backLink" class="back-link">← Back to Dashboard</a>
+  </div>
+
+  <h2>Search Alumni</h2>
+  <p class="subtitle">Find graduates by name, strand, or batch year.</p>
+
+  <div class="search-controls" style="display: flex; gap: 15px; margin-bottom: 30px; align-items: stretch;">
+    <div class="search-box" style="flex: 3; position: relative;">
+      <input type="text" id="searchInput" placeholder="Search by name..." oninput="displayAlumni()" 
+             style="width: 100%; padding-left: 45px; height: 50px; border-radius: 10px;">
+      <div class="search-icon" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%);">🔍</div>
+    </div>
+  
+    <select id="strandFilter" onchange="displayAlumni()" class="filter-dropdown" 
+            style="flex: 1; min-width: 150px; height: 50px; border-radius: 10px; background: #1a2332; color: white; border: 1px solid #2d3748; padding: 0 10px;">
+      <option value="all">All Strands</option>
+      <option value="programming">TVL - Computer Programming</option>
+      <option value="fbs-cookery">TVL - FBS / Cookery</option>
+      <option value="animation">TVL - Animation</option>
+      <option value="beautycare">TVL - Beauty Care</option>
+      <option value="eim">TVL - EIM</option>
+      <option value="stem">STEM</option>
+      <option value="abm">ABM</option>
+      <option value="humss">HUMSS</option>
+    </select>
+    
+    <select id="yearFilter" onchange="displayAlumni()" class="filter-dropdown" 
+            style="flex: 1; min-width: 120px; height: 50px; border-radius: 10px; background: #1a2332; color: white; border: 1px solid #2d3748; padding: 0 10px;">
+      <option value="all">All Years</option>
+      <option value="2018">2018</option>
+      <option value="2019">2019</option>
+      <option value="2020">2020</option>
+      <option value="2021">2021</option>
+      <option value="2022">2022</option>
+      <option value="2023">2023</option>
+      <option value="2024">2024</option>
+      <option value="2025">2025</option>
+    </select>
+  </div>
+
+  <div id="resultsGrid" class="results-grid"></div>
+</div>
+
+<script src="login-logic.js"></script>
+<script src="search-logic.js"></script>
+<script>
+  // Get user specific to this tab
+  const currentUser = getCurrentUser();
+  const backLink = document.getElementById("backLink");
+  
+  // Set the correct dashboard URL based on role
+  let dashboardUrl = "search.html"; // default to student
+  if (currentUser && currentUser.role === "alumni") {
+    dashboardUrl = "searchh.html"; // alumni dashboard
+  }
+  
+  // Set href for the back link
+  backLink.href = dashboardUrl;
+  
+  // Define goBackToDashboard function for logo click
+  function goBackToDashboard() {
+    window.location.href = dashboardUrl;
+  }
+</script>
+  <script src="data-manager.js"></script>
+</body>
+</html>

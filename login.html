@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TRACKALUMNI</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .password-container {
+      position: relative;
+      width: 100%;
+    }
+    .password-container input {
+      width: 100%;
+      padding-right: 40px;
+      box-sizing: border-box;
+    }
+    .toggle-password {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #666;
+      font-size: 14px;
+      user-select: none;
+    }
+    .toggle-password:hover {
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="logo">
+    <img src="sanma.png" alt="San Mateo SHS Logo">
+  </div>
+  
+  <h2>TRACKALUMNI</h2>
+  <p class="subtitle">San Mateo Senior High School</p>
+
+  <label>Username</label>
+  <input type="text" id="username" placeholder="Enter your username">
+
+  <label>Password</label>
+  <div class="password-container">
+    <input type="password" id="password" placeholder="Enter your password">
+    <span class="toggle-password" onclick="togglePassword()">👁️</span>
+  </div>
+
+  <button onclick="login()">Login</button>
+  
+  <a href="register.html">Don't have an account? Register here</a>
+</div>
+
+<script src="login-logic.js"></script>
+<script>
+  function togglePassword() {
+    const passwordInput = document.getElementById('password');
+    const toggleIcon = document.querySelector('.toggle-password');
+    
+    if (passwordInput.type === 'password') {
+      passwordInput.type = 'text';
+      toggleIcon.textContent = '🙈';
+    } else {
+      passwordInput.type = 'password';
+      toggleIcon.textContent = '👁️';
+    }
+  }
+</script>
+<script src="data-manager.js"></script>
+</body>
+</html>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>View Alumni Profile - Alumni Portal</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .profile-view-card {
+      background: rgba(255,255,255,0.1);
+      border-radius: 15px;
+      padding: 30px;
+      margin-top: 20px;
+    }
+    .profile-header-view {
+      text-align: center;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+    .avatar-view {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 80px;
+      margin: 0 auto 15px;
+      overflow: hidden;
+      border: 4px solid rgba(255,255,255,0.3);
+    }
+    .avatar-view img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .profile-name {
+      font-size: 24px;
+      color: #fff;
+      margin-bottom: 5px;
+    }
+    .profile-badge {
+      display: inline-block;
+      background: #4CAF50;
+      color: white;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 12px;
+    }
+    .info-section {
+      margin-bottom: 25px;
+    }
+    .info-section h4 {
+      color: #8b9dc3;
+      margin-bottom: 15px;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+    .info-item {
+      background: rgba(255,255,255,0.05);
+      padding: 15px;
+      border-radius: 8px;
+    }
+    .info-label {
+      color: #8b9dc3;
+      font-size: 12px;
+      margin-bottom: 5px;
+      display: block;
+    }
+    .info-value {
+      color: #fff;
+      font-size: 16px;
+      font-weight: 500;
+    }
+    .back-btn {
+      background: rgba(255,255,255,0.2);
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    .back-btn:hover {
+      background: rgba(255,255,255,0.3);
+    }
+    .not-found {
+      text-align: center;
+      padding: 60px 20px;
+      color: #8b9dc3;
+    }
+  </style>
+</head>
+<body class="dashboard-body">
+
+<header class="top-bar">
+  <div class="logo-small">
+    <img src="sanma.png" alt="Logo">
+    <span>San Mateo Senior High School</span>
+  </div>
+  <button class="logout-btn" onclick="location.href='login.html'">Logout</button>
+</header>
+
+<div class="dashboard-container">
+  <div class="back-nav">
+    <a href="notification.html" class="back-link">← Back to Notifications</a>
+  </div>
+
+  <div id="profileContent">
+    <!-- Profile content will be loaded here -->
+  </div>
+</div>
+
+<script src="login-logic.js"></script>
+<script>
+  // Get alumni ID from URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const alumniId = urlParams.get('id');
+  
+  function loadAlumniProfile() {
+    const profileContent = document.getElementById("profileContent");
+    
+    if (!alumniId) {
+      profileContent.innerHTML = '<div class="not-found">No alumni ID provided.</div>';
+      return;
+    }
+    
+    // Search in all possible data sources
+    const allAlumni = JSON.parse(localStorage.getItem("alumni")) || 
+                      JSON.parse(localStorage.getItem("registered_alumni")) || [];
+    
+    const alumni = allAlumni.find(a => a.lrn === alumniId || a.id === alumniId);
+    
+    if (!alumni) {
+      profileContent.innerHTML = '<div class="not-found">Alumni not found.</div>';
+      return;
+    }
+    
+    // Determine avatar content
+    const avatarContent = alumni.profileImage
+      ? `<img src="${alumni.profileImage}" alt="${alumni.name}">`
+      : `👤`;
+    
+    profileContent.innerHTML = `
+      <div class="profile-view-card">
+        <div class="profile-header-view">
+          <div class="avatar-view" style="${alumni.profileImage ? 'background: transparent;' : ''}">
+            ${avatarContent}
+          </div>
+          <h2 class="profile-name">${alumni.name || 'Unknown'}</h2>
+          <span class="profile-badge">Alumni</span>
+        </div>
+        
+        <div class="info-section">
+          <h4>Personal Information</h4>
+          <div class="info-grid">
+            <div class="info-item">
+              <span class="info-label">Full Name</span>
+              <span class="info-value">${alumni.name || '-'}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Age</span>
+              <span class="info-value">${alumni.age || '-'}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Sex</span>
+              <span class="info-value">${alumni.sex || '-'}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">LRN</span>
+              <span class="info-value">${alumni.lrn || '-'}</span>
+            </div>
+            <div class="info-item" style="grid-column: 1/-1;">
+              <span class="info-label">Email</span>
+              <span class="info-value">${alumni.email || '-'}</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="info-section">
+          <h4>Education Background</h4>
+          <div class="info-grid">
+            <div class="info-item">
+              <span class="info-label">Strand</span>
+              <span class="info-value">${formatStrand(alumni.strand) || '-'}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Year Graduated</span>
+              <span class="info-value">${alumni.year || alumni.batch || '-'}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Current Status</span>
+              <span class="info-value">${formatStatus(alumni.currentStatus) || '-'}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Course Taken</span>
+              <span class="info-value">${alumni.courseTaken || '-'}</span>
+            </div>
+            <div class="info-item" style="grid-column: 1/-1;">
+              <span class="info-label">Course Aligned with Strand</span>
+              <span class="info-value">${alumni.aligned || '-'}</span>
+            </div>
+          </div>
+        </div>
+        
+        <button onclick="history.back()" class="back-btn">← Go Back</button>
+      </div>
+    `;
+  }
+  
+  function formatStrand(strand) {
+    const strandMap = {
+      'programming': 'TVL - Computer Programming',
+      'fbs-cookery': 'TVL - FBS / Cookery',
+      'animation': 'TVL - Animation',
+      'beautycare': 'TVL - Beauty Care',
+      'eim': 'TVL - EIM',
+      'stem': 'STEM',
+      'abm': 'ABM',
+      'humss': 'HUMSS'
+    };
+    return strandMap[strand] || strand;
+  }
+
+  function formatStatus(status) {
+    const statusMap = {
+      'currently-enrolled': 'Currently Enrolled in College',
+      'completed-college': 'Completed College',
+      'never-pursued': 'Never Pursued College'
+    };
+    return statusMap[status] || status;
+  }
+  
+  // Load profile on page load
+  loadAlumniProfile();
+</script>
+<script src="data-manager.js"></script>
+</body>
+</html>
